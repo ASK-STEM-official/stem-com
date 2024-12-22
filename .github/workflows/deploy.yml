@@ -23,7 +23,7 @@ jobs:
       # 依存関係をインストール
       - name: Install dependencies
         working-directory: project
-        run: npm install
+        run: npm install --force
 
       # 環境変数の注入
       - name: Inject environment variables
