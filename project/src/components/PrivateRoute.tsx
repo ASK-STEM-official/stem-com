@@ -1,8 +1,8 @@
 // src/components/Navbar.tsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PenLine, BookOpen, LogOut, Sun, Moon, User as UserIcon } from 'lucide-react'; // Userアイコンを追加
-import { getUserTheme, setUserTheme } from '../lib/firebase/firestore'; // 追加
+import { PenLine, BookOpen, LogOut, Sun, Moon } from 'lucide-react';
+import { getUserTheme, setUserTheme } from '../lib/firestore'; // 追加
 
 interface NavbarProps {
   user: any; // Firebase User型に変更可能
@@ -16,10 +16,8 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
   useEffect(() => {
     const initializeTheme = async () => {
       if (user) {
-        console.log("User is logged in. Fetching theme from Firestore...");
         // Firestoreからユーザーのテーマ設定を取得
         const userTheme = await getUserTheme(user.uid);
-        console.log("Fetched theme:", userTheme);
         if (userTheme === 'dark') {
           setDarkMode(true);
           document.documentElement.classList.add('dark');
@@ -37,10 +35,8 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
           }
         }
       } else {
-        console.log("User is not logged in. Fetching theme from localStorage...");
         // ログインしていない場合、ローカルストレージからテーマ設定を取得
         const storedTheme = localStorage.getItem('theme');
-        console.log("Stored theme:", storedTheme);
         if (storedTheme === 'dark') {
           setDarkMode(true);
           document.documentElement.classList.add('dark');
@@ -66,7 +62,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
   // テーマ切り替えハンドラー
   const toggleDarkMode = async () => {
     if (darkMode) {
-      console.log("Switching to light mode");
       document.documentElement.classList.remove('dark');
       setDarkMode(false);
       if (user) {
@@ -75,7 +70,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
         localStorage.setItem('theme', 'light');
       }
     } else {
-      console.log("Switching to dark mode");
       document.documentElement.classList.add('dark');
       setDarkMode(true);
       if (user) {
@@ -125,12 +119,12 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
                     <img
                       src={user.photoURL}
                       alt={user.displayName}
-                      className="h-10 w-10 rounded-full object-cover border-2 border-indigo-600 shadow-md transition-transform duration-300 transform hover:scale-110"
+                      className="h-8 w-8 rounded-full"
                     />
                   ) : (
-                    <UserIcon className="h-10 w-10 text-gray-400" />
+                    <User className="h-8 w-8" />
                   )}
-                  <span className="text-lg font-medium text-indigo-600 hover:text-indigo-800">{user.displayName}</span>
+                  <span className="font-medium">{user.displayName}</span>
                 </Link>
                 
                 {/* ログアウトボタン */}
