@@ -22,12 +22,12 @@ jobs:
 
       # 依存関係をインストール
       - name: Install dependencies
-        working-directory: pro
+        working-directory: project
         run: npm install
 
       # 環境変数の注入
       - name: Inject environment variables
-        working-directory: pro
+        working-directory: project
         run: |
           echo "VITE_APP_API_KEY=${{ secrets.VITE_APP_API_KEY }}" >> .env
           echo "VITE_APP_AUTH_DOMAIN=${{ secrets.VITE_APP_AUTH_DOMAIN }}" >> .env
@@ -39,7 +39,7 @@ jobs:
 
       # プロジェクトのビルド
       - name: Build the project
-        working-directory: pro
+        working-directory: project
         run: npm run build
 
       # GitHub Pages にデプロイ
